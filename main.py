@@ -1,104 +1,9 @@
-import numpy as np
-import matplotlib.pyplot as plt
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
 
-
-# region Testing function
-def SignalSamplesAreEqual(file_name, samples):
-    expected_indices = []
-    expected_samples = []
-    with open(file_name, 'r') as f:
-        line = f.readline()
-        line = f.readline()
-        line = f.readline()
-        line = f.readline()
-        while line:
-            # process line
-            L = line.strip()
-            if len(L.split(' ')) == 2:
-                L = line.split(' ')
-                V1 = int(L[0])
-                V2 = float(L[1])
-                expected_indices.append(V1)
-                expected_samples.append(V2)
-                line = f.readline()
-            else:
-                break
-
-    if len(expected_samples) != len(samples):
-        print("Test case failed, your signal have different length from the expected one")
-        return
-    for i in range(len(expected_samples)):
-        if abs(samples[i] - expected_samples[i]) < 0.01:
-            continue
-        else:
-            print("Test case failed, your signal have different values from the expected one")
-            return
-    print("Test case passed successfully")
-
-
-# endregion
-
-
-# Class that handles signals data
-class SignalProcessor:
-    # Define variable that will store read/generated signal
-    def __init__(self):
-        self.signal = []
-
-    def read_signal_from_file(self, filename):
-        with open(filename, 'r') as file:
-            t = int(file.readline().strip())
-            is_periodic = bool(int(file.readline().strip()))
-            n_samples = int(file.readline().strip())
-            self.signal = []
-            for _ in range(n_samples):
-                values = file.readline().split()
-                index, sample_amp = map(float, values)
-                self.signal.append((index, sample_amp))
-
-    def display_signal(self):
-        if not self.signal:
-            print("No signal data to display.")
-            return
-        plt.subplot(211)
-        x, y = zip(*self.signal)
-        plt.plot(x, y)
-        plt.xlabel("Time" if self.signal[0][0] == 0 else "Frequency")
-        plt.ylabel("Amplitude")
-
-        plt.subplot(212)
-        x = [sample[0] for sample in self.signal]
-        y = [sample[1] for sample in self.signal]
-
-        markerline, stemlines, baseline = plt.stem(x, y)
-        plt.setp(markerline, color='b')
-        plt.setp(stemlines, color='b')
-        plt.setp(baseline, color='b')
-
-        plt.xlabel("Sample Index" if self.signal[0][0] == 0 else "Frequency")
-        plt.ylabel("Amplitude")
-        plt.show()
-
-    def generate_signal(self, signalType, amplitude, analog_frequency, sampling_frequency, phase_shift):
-        # Check if the sampling theorem satisfied
-        if 2 * analog_frequency > sampling_frequency:
-            messagebox.showerror(
-                "Sampling Frequency Error",
-                "The sampling frequency must be at least twice the maximum analog frequency."
-            )
-            return
-
-        omega = 2 * np.pi * analog_frequency
-        t = np.linspace(0, 1, int(sampling_frequency), endpoint=False)
-        if signalType == "sin":
-            signal = amplitude * np.sin(omega * t + phase_shift)
-        else:
-            signal = amplitude * np.cos(omega * t + phase_shift)
-
-        self.signal = list(zip(t, signal))
+from SignalProcessor import SignalProcessor
+from testing import SignalSamplesAreEqual
 
 
 def read_file_and_display():
@@ -178,4 +83,3 @@ sampling_freq_entry.grid(row=5, column=1)
 phase_shift_label.grid(row=6, column=0)
 phase_shift_entry.grid(row=6, column=1)
 app.mainloop()
-
