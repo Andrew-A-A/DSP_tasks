@@ -18,7 +18,7 @@ class SignalProcessor:
             for _ in range(n_samples):
                 values = file.readline().split()
                 index, sample_amp = map(float, values)
-                self.signal.append((index, sample_amp))
+                self.signal.append([index, sample_amp])
 
     def display_signal(self):
         if not self.signal:

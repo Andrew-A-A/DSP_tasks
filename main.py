@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
-
 from SignalProcessor import SignalProcessor
 from testing import SignalSamplesAreEqual
 
@@ -38,9 +37,9 @@ def generate_and_display_signal():
         i += 1
     # Test generated signals
     if signal_type.get() == "sin":
-        SignalSamplesAreEqual("SinOutput.txt", [sample[1] for sample in generated_signal])
+        SignalSamplesAreEqual("data/task1/SinOutput.txt", [sample[1] for sample in generated_signal])
     else:
-        SignalSamplesAreEqual("CosOutput.txt", [sample[1] for sample in generated_signal])
+        SignalSamplesAreEqual("data/task1/CosOutput.txt", [sample[1] for sample in generated_signal])
 
 
 app = tk.Tk()
