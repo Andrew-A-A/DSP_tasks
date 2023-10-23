@@ -4,7 +4,6 @@ from tkinter import messagebox
 from SignalProcessor import SignalProcessor
 from testing import SignalSamplesAreEqual
 
-
 def read_file_and_display():
     file_path = filedialog.askopenfilename(filetypes=[("Text Files", "*.txt")])
     signal_processor.read_signal_from_file(file_path)
