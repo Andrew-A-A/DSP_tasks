@@ -1,13 +1,14 @@
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
-
 from ArethmaticOperations import *
 from SignalProcessor import SignalProcessor
 from testing import SignalSamplesAreEqual
 from tkinter import ttk
 
 added_signals = []
+sub_signals = []
+
 
 def read_file_and_display():
     file_path = filedialog.askopenfilename(filetypes=[("Text Files", "*.txt")])
@@ -139,26 +140,6 @@ def on_select(event):
         normalization_frame.grid_forget()
 
 
-# def perform_operation():
-#     selection = combo.selection_get()
-#     if selection == "add":
-#
-#     elif selection == "Subtract":
-#         x=2
-#     elif selection == "Accumulate":
-#
-#     elif selection == "Square":
-#
-#     elif selection == "Multiply":
-#
-#     elif selection == "Shift":
-#
-#     elif selection == "Normalized":
-#
-#     else:
-#
-
-
 def load_files():
     root = tk.Tk()
     root.withdraw()  # to hide the main window
@@ -179,6 +160,26 @@ def load_files():
     return signals
 
 
+def load_file(num):
+    root = tk.Tk()
+    root.withdraw()  # to hide the main window
+    file_path = filedialog.askopenfilename(parent=root, title='Choose files')
+    if len(file_path) < 1:
+        messagebox.showerror(
+            "Missing input",
+            "Please select file"
+        )
+        return
+    signal_processor.read_signal_from_file(file_path)
+    if num == 0:
+        sub_signals.append(signal_processor.signal)
+        return
+    else:
+        sub_signals.append(signal_processor.signal)
+        signal_processor.signal = subtract(sub_signals[0], sub_signals[1])
+        return signal_processor.signal
+
+
 def update_label_text():
     loaded_files_label.config(text="\n".join([item for sublist in added_signals for item in sublist]))
 
@@ -188,6 +189,7 @@ app.title("Signal Processing")
 
 signal_processor = SignalProcessor()
 
+# region GUI
 # Create GUI elements
 read_button = tk.Button(app, text="Read Signal from File", command=read_file_and_display)
 generate_button = tk.Button(app, text="Generate and Display Signal", command=generate_and_display_signal)
@@ -219,9 +221,9 @@ load_button = tk.Button(app, text="Load files", command=load_files)
 loaded_files_label = tk.Label(app, text="\n".join([item for sublist in added_signals for item in sublist]))
 
 file_one_label = tk.Label(app, text="File one:")
-file_one_button = tk.Button(app, text="Select file")
+file_one_button = tk.Button(app, text="Select file", command=lambda: load_file(0))
 file_two_label = tk.Label(app, text="File two:")
-file_two_button = tk.Button(app, text="Select file")
+file_two_button = tk.Button(app, text="Select file", command=lambda: load_file(1))
 select_file_button = tk.Button(app, text="Select file")
 number_entry = tk.Entry(app)
 normalization_frame = tk.Frame(app)
@@ -251,3 +253,4 @@ phase_shift_entry.grid(row=6, column=1)
 combo.grid(row=0, column=3)
 perform_operation_button.grid(row=3, column=3)
 app.mainloop()
+# endregion
