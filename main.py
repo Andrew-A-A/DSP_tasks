@@ -1,13 +1,14 @@
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
-
 from ArethmaticOperations import *
 from SignalProcessor import SignalProcessor
 from testing import SignalSamplesAreEqual
 from tkinter import ttk
 
 added_signals = []
+sub_signals = []
+
 
 def read_file_and_display():
     file_path = filedialog.askopenfilename(filetypes=[("Text Files", "*.txt")])
@@ -165,6 +166,26 @@ def load_files(changeFile = -1):
     update_label_text()
 
 
+def load_file(num):
+    root = tk.Tk()
+    root.withdraw()  # to hide the main window
+    file_path = filedialog.askopenfilename(parent=root, title='Choose files')
+    if len(file_path) < 1:
+        messagebox.showerror(
+            "Missing input",
+            "Please select file"
+        )
+        return
+    signal_processor.read_signal_from_file(file_path)
+    if num == 0:
+        sub_signals.append(signal_processor.signal)
+        return
+    else:
+        sub_signals.append(signal_processor.signal)
+        signal_processor.signal = subtract(sub_signals[0], sub_signals[1])
+        return signal_processor.signal
+
+
 def update_label_text():
     loaded_files_label.config(text="\n".join([item for sublist in added_signals for item in sublist]))
 
@@ -271,6 +292,7 @@ app.title("Signal Processing")
 
 signal_processor = SignalProcessor()
 
+# region GUI
 # Create GUI elements
 read_button = tk.Button(app, text="Read Signal from File", command=read_file_and_display)
 generate_button = tk.Button(app, text="Generate and Display Signal", command=generate_and_display_signal)
@@ -341,3 +363,4 @@ phase_shift_entry.grid(row=6, column=1)
 combo.grid(row=0, column=3)
 perform_operation_button.grid(row=3, column=3)
 app.mainloop()
+# endregion
