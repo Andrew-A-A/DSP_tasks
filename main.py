@@ -165,27 +165,6 @@ def load_files(changeFile = -1):
         added_signals[changeFile] = list(file_paths)
     update_label_text()
 
-
-def load_file(num):
-    root = tk.Tk()
-    root.withdraw()  # to hide the main window
-    file_path = filedialog.askopenfilename(parent=root, title='Choose files')
-    if len(file_path) < 1:
-        messagebox.showerror(
-            "Missing input",
-            "Please select file"
-        )
-        return
-    signal_processor.read_signal_from_file(file_path)
-    if num == 0:
-        sub_signals.append(signal_processor.signal)
-        return
-    else:
-        sub_signals.append(signal_processor.signal)
-        signal_processor.signal = subtract(sub_signals[0], sub_signals[1])
-        return signal_processor.signal
-
-
 def update_label_text():
     loaded_files_label.config(text="\n".join([item for sublist in added_signals for item in sublist]))
 
