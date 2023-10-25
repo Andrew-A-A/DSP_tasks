@@ -1,12 +1,15 @@
 from tkinter import messagebox
 import numpy as np
 from matplotlib import pyplot as plt
-
+from ArethmaticOperations import AritmaticOperation
 
 class SignalProcessor:
     # Define variable that will store read/generated signal
     def __init__(self):
         self.signal = []
+
+    def set_signal(self, signal):
+        self.signal = signal
 
     def read_signal_from_file(self, filename):
         with open(filename, 'r') as file:
@@ -23,6 +26,7 @@ class SignalProcessor:
         if not self.signal:
             print("No signal data to display.")
             return
+        
         plt.subplot(211)
         x, y = zip(*self.signal)
         plt.plot(x, y)
