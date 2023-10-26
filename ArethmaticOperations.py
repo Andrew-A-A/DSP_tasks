@@ -1,4 +1,3 @@
-
 class AritmaticOperation():
     def __init__(self):
         pass
@@ -17,7 +16,7 @@ class AritmaticOperation():
         i = 0
         total = signal1
         for index, val in signal2:
-            total[i][1] = abs(total[i][1] - val)
+            total[i][1] = val - total[i][1]
             i += 1
         return total
 
@@ -56,5 +55,4 @@ class AritmaticOperation():
         for k in range(1, len(signal)):
             y[k][0] = y[k - 1][0] + signal[k][0]
             y[k][1] = y[k - 1][1] + signal[k][1]
-        return y    
-
+        return y

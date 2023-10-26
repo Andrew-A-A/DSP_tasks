@@ -4,6 +4,7 @@ from testing import SignalSamplesAreEqual
 
 operation = AritmaticOperation()
 
+
 def testAdd():
     print("Test Add:")
     signals = list()
