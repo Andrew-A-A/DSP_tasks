@@ -8,8 +8,6 @@ from tkinter import ttk
 
 # Lists for storing signals
 added_signals = []
-sub_signals = []
-
 
 # Function to read and display a signal from a file
 def read_file_and_display():
@@ -147,14 +145,14 @@ def on_select(event):
 
 
 # Function to handle entry field click event
-def on_entry_click():
+def on_entry_click(*arks):
     if number_entry.get() == 'Enter a number':
         number_entry.delete(0, "end")
         number_entry.config(fg="black")  # Change text color to black when typing
 
 
 # Function to handle entry field focus out event
-def on_focus_out():
+def on_focus_out(*arks):
     if number_entry.get() == "":
         number_entry.insert(0, 'Enter a number')
         number_entry.config(fg='gray')  # Use the specified lighter color
