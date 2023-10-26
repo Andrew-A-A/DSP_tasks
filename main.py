@@ -8,6 +8,7 @@ from tkinter import ttk
 
 # Lists for storing signals
 added_signals = []
+sub_signals=[]
 
 # Function to read and display a signal from a file
 def read_file_and_display():
@@ -170,6 +171,13 @@ def load_files(changeFile=-1):
     update_label_text()
 
 
+def load_file():
+    root = tk.Tk()
+    root.withdraw()  # to hide the main window
+    file_path = filedialog.askopenfilename(parent=root, title='Choose file')
+    sub_signals.append(file_path)
+
+
 # Function to update the label text with loaded file paths
 def update_label_text():
     loaded_files_label.config(text="\n".join([item for sublist in added_signals for item in sublist]))
@@ -202,13 +210,13 @@ def PerformFunction():
         output_signal = arith_operation.add(signals)
 
     elif operation == "Subtract":
-        if number_of_files < 2:
+        if len(sub_signals) < 2:
             messagebox.showerror("Missing input", "Number of selected files must be exactly 2")
             return
 
-        signal_processor.read_signal_from_file(added_signals[0][0])
+        signal_processor.read_signal_from_file(sub_signals[0])
         first_signal = signal_processor.signal
-        signal_processor.read_signal_from_file(added_signals[1][0])
+        signal_processor.read_signal_from_file(sub_signals[1])
         second_signal = signal_processor.signal
         output_signal = arith_operation.subtract(first_signal, second_signal)
 
@@ -259,6 +267,8 @@ def PerformFunction():
         output_signal = arith_operation.accumulation(first_signal)
 
     signal_processor.set_signal(output_signal)
+    sub_signals.clear()
+    added_signals.clear()
     signal_processor.display_signal()
 
 
@@ -299,9 +309,9 @@ load_button = tk.Button(app, text="Load files", command=load_files)
 loaded_files_label = tk.Label(app, text="\n".join([item for sublist in added_signals for item in sublist]))
 
 file_one_label = tk.Label(app, text="File one:")
-file_one_button = tk.Button(app, text="Select file", command=lambda: load_files(changeFile=0))
+file_one_button = tk.Button(app, text="Select file", command=load_file)
 file_two_label = tk.Label(app, text="File two:")
-file_two_button = tk.Button(app, text="Select file", command=lambda: load_files(changeFile=1))
+file_two_button = tk.Button(app, text="Select file", command=load_file)
 select_file_button = tk.Button(app, text="Select file", command=lambda: load_files(changeFile=0))
 # Create a label as a placeholder
 placeholder_label = tk.Label(app, text='Enter a number', fg='gray')
@@ -317,7 +327,6 @@ normalize_label = tk.Label(normalization_frame, text="Normalize from:")
 normalize_minus_one_radio = tk.Radiobutton(normalization_frame, text="-1 to 1", value="-1to1", variable=selected_option)
 normalize_zero_radio = tk.Radiobutton(normalization_frame, text="0 to 1", value="0to1", variable=selected_option)
 perform_operation_button = tk.Button(app, text="Perform operation", command=PerformFunction)
-
 
 # Place GUI elements on the grid
 normalize_label.grid(row=1, column=3)
