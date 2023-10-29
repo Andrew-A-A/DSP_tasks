@@ -28,8 +28,7 @@ def generate_and_display_signal():
         phase_shift_val = float(phase_shift_entry.get())
 
         # Generate the signal
-        signal_processor.generate_signal(signal_type_val, amplitude_val, analog_freq_val, sampling_freq_val,
-                                         phase_shift_val)
+        signal_processor.generate_signal(signal_type_val, amplitude_val, analog_freq_val, sampling_freq_val, phase_shift_val)
 
     except ValueError:
         messagebox.showerror("Missing input", "Please fill all required data.")
@@ -146,14 +145,14 @@ def on_select(event):
 
 
 # Function to handle entry field click event
-def on_entry_click(*arks):
+def on_entry_click(*args):
     if number_entry.get() == 'Enter a number':
         number_entry.delete(0, "end")
         number_entry.config(fg="black")  # Change text color to black when typing
 
 
 # Function to handle entry field focus out event
-def on_focus_out(*arks):
+def on_focus_out(*args):
     if number_entry.get() == "":
         number_entry.insert(0, 'Enter a number')
         number_entry.config(fg='gray')  # Use the specified lighter color
@@ -236,7 +235,7 @@ def PerformFunction():
 
         signal_processor.read_signal_from_file(added_signals[0][0])
         first_signal = signal_processor.signal
-        output_signal = arith_operation.shift(first_signal, int(number_entry.get()))
+        output_signal = arith_operation.shift(first_signal, -int(number_entry.get()))
 
     elif operation == "Normalize":
         if number_of_files < 1 or False:  # Add condition for selecting normalization range
