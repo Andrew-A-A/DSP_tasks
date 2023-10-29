@@ -8,7 +8,8 @@ from tkinter import ttk
 
 # Lists for storing signals
 added_signals = []
-sub_signals=[]
+sub_signals = []
+
 
 # Function to read and display a signal from a file
 def read_file_and_display():
