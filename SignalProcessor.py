@@ -2,6 +2,7 @@ from tkinter import messagebox
 import numpy as np
 from matplotlib import pyplot as plt
 
+
 class SignalProcessor:
     # Define variable that will store read/generated signal
     def __init__(self):
@@ -25,7 +26,7 @@ class SignalProcessor:
         if not self.signal:
             print("No signal data to display.")
             return
-        
+
         plt.subplot(211)
         x, y = zip(*self.signal)
         plt.plot(x, y)

@@ -1,7 +1,9 @@
 import tkinter as tk
-from tkinter import filedialog, messagebox, ttk
+from tkinter import filedialog, messagebox
+
 from Quantizer import *
 from SignalProcessor import SignalProcessor
+
 
 class Task_3:
     def __init__(self, main_window):
@@ -13,7 +15,7 @@ class Task_3:
     def open_window(self):
         if self.app is not None:
             return
-        
+
         self.app = tk.Toplevel(self.main_window)
         self.app.title("Task 3")
         self.app.geometry("200x200+200+200")
@@ -54,7 +56,7 @@ class Task_3:
         if self.file_path == "" or self.number_entry.get() == "Enter a number":
             messagebox.showerror("Missing input", "Please select a file first and a number")
             return
-        
+
         self.signal_processor.read_signal_from_file(self.file_path)
         signal = self.signal_processor.signal
 

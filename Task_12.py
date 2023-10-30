@@ -4,6 +4,7 @@ from ArethmaticOperations import *
 from SignalProcessor import SignalProcessor
 from testing import SignalSamplesAreEqual
 
+
 class Task_12:
     def __init__(self, main_window):
         self.signal_processor = SignalProcessor()
@@ -17,10 +18,11 @@ class Task_12:
             return
         self.app = tk.Toplevel(self.main_window)
         self.app.title("Task 1&2")
-        
+
         # Create GUI elements
         self.read_button = tk.Button(self.app, text="Read Signal from File", command=self.read_file_and_display)
-        self.generate_button = tk.Button(self.app, text="Generate and Display Signal", command=self.generate_and_display_signal)
+        self.generate_button = tk.Button(self.app, text="Generate and Display Signal",
+                                         command=self.generate_and_display_signal)
 
         self.amplitude_label = tk.Label(self.app, text="Amplitude:")
         self.amplitude_entry = tk.Entry(self.app)
@@ -46,7 +48,8 @@ class Task_12:
 
         # Add widgets for each option
         self.load_button = tk.Button(self.app, text="Load files", command=self.load_files)
-        self.loaded_files_label = tk.Label(self.app, text="\n".join([item for sublist in self.added_signals for item in sublist]))
+        self.loaded_files_label = tk.Label(self.app,
+                                           text="\n".join([item for sublist in self.added_signals for item in sublist]))
 
         self.file_one_label = tk.Label(self.app, text="File one:")
         self.file_one_button = tk.Button(self.app, text="Select file", command=self.load_file)
@@ -64,8 +67,10 @@ class Task_12:
         self.selected_option = tk.StringVar()
         self.normalize_label = tk.Label(self.normalization_frame, text="Normalize from:")
 
-        self.normalize_minus_one_radio = tk.Radiobutton(self.normalization_frame, text="-1 to 1", value="-1to1", variable=self.selected_option)
-        self.normalize_zero_radio = tk.Radiobutton(self.normalization_frame, text="0 to 1", value="0to1", variable=self.selected_option)
+        self.normalize_minus_one_radio = tk.Radiobutton(self.normalization_frame, text="-1 to 1", value="-1to1",
+                                                        variable=self.selected_option)
+        self.normalize_zero_radio = tk.Radiobutton(self.normalization_frame, text="0 to 1", value="0to1",
+                                                   variable=self.selected_option)
         self.perform_operation_button = tk.Button(self.app, text="Perform operation", command=self.PerformFunction)
 
         # Place GUI elements on the grid
@@ -138,7 +143,6 @@ class Task_12:
                 "data/task1/CosOutput.txt", [sample[1] for sample in generated_signal]
             )
 
-
     # Function to handle event when an operation is selected from the combo box
     def on_select(self, event):
         operation = self.combo.get()
@@ -185,7 +189,7 @@ class Task_12:
             self.file_two_label.grid_forget()
             self.file_two_button.grid_forget()
             self.normalization_frame.grid_forget()
-            self. number_entry.grid_forget()
+            self.number_entry.grid_forget()
         elif operation == "Square":
             # Show only button to select one file
             self.select_file_button.grid(row=1, column=3)
@@ -238,13 +242,11 @@ class Task_12:
             self.number_entry.delete(0, "end")
             self.number_entry.config(fg="black")  # Change text color to black when typing
 
-
     # Function to handle entry field focus out event
     def on_focus_out(self, *args):
         if self.number_entry.get() == "":
             self.number_entry.insert(0, "Enter a number")
             self.number_entry.config(fg="gray")  # Use the specified lighter color
-
 
     # Function to load files for signal processing
     def load_files(self, changeFile=-1):
@@ -257,20 +259,17 @@ class Task_12:
             self.added_signals[changeFile] = list(file_paths)
         self.update_label_text()
 
-
     def load_file(self):
         root = tk.Tk()
         root.withdraw()  # to hide the main window
         file_path = filedialog.askopenfilename(parent=root, title="Choose file")
         self.sub_signals.append(file_path)
 
-
     # Function to update the label text with loaded file paths
     def update_label_text(self):
         self.loaded_files_label.config(
             text="\n".join([item for sublist in self.added_signals for item in sublist])
         )
-
 
     # Function to perform the selected signal processing operation
     def PerformFunction(self):
@@ -308,8 +307,8 @@ class Task_12:
             output_signal = arith_operation.subtract(first_signal, second_signal)
 
         elif operation == "Multiply":
-            if (number_of_files < 1 or self.number_entry.get() == "" or self.number_entry.get() == "Enter a number"):
-                messagebox.showerror("Missing input", "You must choose one file and enter the multiplication factor",)
+            if number_of_files < 1 or self.number_entry.get() == "" or self.number_entry.get() == "Enter a number":
+                messagebox.showerror("Missing input", "You must choose one file and enter the multiplication factor", )
                 return
 
             self.signal_processor.read_signal_from_file(self.added_signals[0][0])
@@ -317,8 +316,8 @@ class Task_12:
             output_signal = arith_operation.multiply(first_signal, int(self.number_entry.get()))
 
         elif operation == "Shift":
-            if (number_of_files < 1 or self.number_entry.get() == "" or self.number_entry.get() == "Enter a number"):
-                messagebox.showerror("Missing input", "You must choose one file and enter the shifting factor",)
+            if number_of_files < 1 or self.number_entry.get() == "" or self.number_entry.get() == "Enter a number":
+                messagebox.showerror("Missing input", "You must choose one file and enter the shifting factor", )
                 return
 
             self.signal_processor.read_signal_from_file(self.added_signals[0][0])
@@ -326,7 +325,7 @@ class Task_12:
             output_signal = arith_operation.shift(first_signal, -int(self.number_entry.get()))
 
         elif operation == "Normalize":
-            if (number_of_files < 1):
+            if number_of_files < 1:
                 messagebox.showerror("Missing input", "You must choose one file and the normalization range")
                 return
 
