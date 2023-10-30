@@ -1,7 +1,6 @@
 from tkinter import messagebox
 import numpy as np
 from matplotlib import pyplot as plt
-from ArethmaticOperations import AritmaticOperation
 
 class SignalProcessor:
     # Define variable that will store read/generated signal
