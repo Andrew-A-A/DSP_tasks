@@ -41,6 +41,7 @@ class Task_3:
         radio2 = tk.Radiobutton(frame, text="Bits", value="Bits", variable=self.selected_option)
         radio1.grid(row=10, column=2)
         radio2.grid(row=15, column=2)
+        self.selected_option.set(" ")
 
         # # Create perform operation button
         perform_operation_button = tk.Button(frame, text="Perform operation", command=self.perform_operation)
@@ -68,7 +69,7 @@ class Task_3:
             output_signal = quantize(signal=signal, bits_num=value)
 
         self.signal_processor.set_signal(signal)
-        self.signal_processor.display_signal()
+        self.signal_processor.display_signal(continuous=False)
 
     # Function to handle entry field click event
     def on_entry_click(self, *args):
