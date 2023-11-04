@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 from ArethmaticOperations import *
 from SignalProcessor import SignalProcessor
-from testing import SignalSamplesAreEqual
+from Test.testing import SignalSamplesAreEqual
 
 
 class Task_12:
