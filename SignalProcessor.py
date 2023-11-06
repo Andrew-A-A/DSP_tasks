@@ -17,10 +17,18 @@ class SignalProcessor:
             is_periodic = bool(int(file.readline().strip()))
             n_samples = int(file.readline().strip())
             self.signal = []
-            for _ in range(n_samples):
-                values = file.readline().split()
-                index, sample_amp = map(float, values)
-                self.signal.append([index, sample_amp])
+            if is_periodic:
+                for _ in range(n_samples):
+                    values = file.readline().replace(',', ' ').split()
+                    values[0] = values[0].replace('f', '')
+                    values[1] = values[1].replace('f', '')
+                    amplitude, phase_shift = map(float, values)
+                    self.signal.append([amplitude, phase_shift])
+            else:
+                for _ in range(n_samples):
+                    values = file.readline().split()
+                    index, sample_amp = map(float, values)
+                    self.signal.append([index, sample_amp])
 
     def display_signal(self, discrete=True, continuous=True):
         if not self.signal:
