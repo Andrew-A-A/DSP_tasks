@@ -43,13 +43,13 @@ class Task_4:
 
         # Create a button to execute the DFT
         DFT_button = tk.Button(frame, text="DFT", width=20, command=self.implementDFT)
-        DFT_button.grid(row=5, column=0)
+        DFT_button.grid(row=5, column=0, pady=2)
 
         # Create a button to execute the DFT
         IDFT_button = tk.Button(
             frame, text="IDFT", width=20, command=self.implementIDFT
         )
-        IDFT_button.grid(row=5, column=0)
+        IDFT_button.grid(row=7, column=0, pady=2)
 
         # create entry number for sampling_frequency
         self.number_entry_sampling_frequency = tk.Entry(frame, fg="gray", width=30)
@@ -83,31 +83,29 @@ class Task_4:
             self.add_sample((sample[0], sample[1]))
 
     def implementIDFT(self):
-        data = self.read_file(self.file_path)
+        data = self.signal_processor.read_signal_from_file(self.file_path)
         if len(data) == 0:
             messagebox.showerror("Missing Input", "Please select a file first")
             return
 
         self.signal_processor.signal = idft(data)
+        print(self.signal_processor.signal)
         self.signal_processor.display_signal(self.signal_processor.signal)
 
-    def read_file(self, file_name):
-        data = []
-        with open(file_name, "r") as file:
-            content = file.read()
-            lines = content.split("\n")
-
-            if list[-1] == []:
-                list.pop()
-
-            for line in lines:
-                # split each line
-                values = line.split(" ")
-                # convert values to float
-                values = [float(element) for element in values]
-                data.append(values)
-
-        return data
+    # def read_file(self, file_name):
+    #     data = []
+    #     with open(file_name, "r") as file:
+    #         content = file.read()
+    #         lines = content.split("\n")
+    #         if list[-1] == []:
+    #             list.pop()
+    #         for line in lines:
+    #             # split each line
+    #             values = line.split(" ")
+    #             # convert values to float
+    #             values = [float(element) for element in values]
+    #             data.append(values)
+    #     return data
 
     def plot_function(self):
         root = tk.Tk()
@@ -124,7 +122,7 @@ class Task_4:
             return
 
         sampling_frequency = int(sampling_frequency)
-        sample_file = self.read_file(file_path)
+        sample_file = self.signal_processor.read_signal_from_file(file_path)
 
         frequency_amplitude, frequency_phase = sketch(sample_file, sampling_frequency)
         # plot frequency verse Amplitude
@@ -175,6 +173,10 @@ class Task_4:
 
         # Open the file in write mode
         with open(filename, "w") as f:
+            f.write("0\n")
+            f.write(str(int(self.is_periodic(data))) + "\n")
+            f.write(str(len(data)) + "\n")
+
             # Write each inner list to a separate line in the file
             for idx in range(len(data)):
                 line = ""
@@ -313,3 +315,14 @@ class Task_4:
         if number_entry[0].get() == "":
             number_entry[0].insert(0, number_entry[1])
             number_entry[0].config(fg="gray")  # Use the specified lighter color
+
+    def is_periodic(self, signal):
+        # Find the dominant frequency component
+        max_amplitude = max(signal, key=lambda x: x[0])[0]
+
+        # Check for harmonics (multiples of the fundamental frequency)
+        for amplitude, _ in signal:
+            if amplitude > self.EPSILON * max_amplitude and amplitude != max_amplitude:
+                return False  # Found a significant harmonic, not periodic
+
+        return True  # No significant harmonic, signal is periodic
