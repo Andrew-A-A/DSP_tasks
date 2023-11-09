@@ -318,11 +318,14 @@ class Task_4:
 
     def is_periodic(self, signal):
         # Find the dominant frequency component
-        max_amplitude = max(signal, key=lambda x: x[0])[0]
+        L = 0
+        R = len(signal) - 1
 
-        # Check for harmonics (multiples of the fundamental frequency)
-        for amplitude, _ in signal:
-            if amplitude > self.EPSILON * max_amplitude and amplitude != max_amplitude:
-                return False  # Found a significant harmonic, not periodic
+        while L < R:
+            if (
+                abs(signal[L][0] - signal[R][1]) > self.EPSILON
+                or abs(signal[L][1] - signal[R][1]) > self.EPSILON
+            ):
+                return True
 
-        return True  # No significant harmonic, signal is periodic
+        return False  # No significant harmonic, signal is periodic
