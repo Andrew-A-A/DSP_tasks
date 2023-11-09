@@ -2,8 +2,10 @@ import cmath
 import math
 
 
-def dft(signals_in_time_domain):
-    signals_in_freq_domain = convert_to_frequency_domain(signals_in_time_domain)
+def dft(signal_in_time_domain):
+    # arguements: one signal
+    # return: [[amp, phase shift]]
+    signals_in_freq_domain = convert_to_frequency_domain(signal_in_time_domain)
     amp_shift = []
     for signal in signals_in_freq_domain:
         # Amplitude =sqrt (real number^2 + coefficient of imaginary number ^ 2)
@@ -15,6 +17,8 @@ def dft(signals_in_time_domain):
 
 
 def idft(signals_in_frequency_domain):
+    # arguements: [[amp, phase shift]]
+    # return: signal
     signals_in_time_domain = convert_to_time_domain(signals_in_frequency_domain)
     reconstructed_signal = []
     for i in range(len(signals_in_time_domain)):
@@ -54,6 +58,8 @@ def convert_to_time_domain(signals):
 
 # Function creates two lists for plotting (Frequency V.S Amplitude) (Frequency V.S Phase shift)
 def sketch(amp_shift: list, sampling_frequency):
+    # arguements: [[amp, phase shift]], int
+    # return [[frequency, amp]], [[frequency, phas shift]]
     sampling_time = 1 / sampling_frequency
     omega = (2 * math.pi) / sampling_time * len(amp_shift)
     frequency_verse_amplitude = []

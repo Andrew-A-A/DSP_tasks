@@ -28,23 +28,31 @@ class Task_3:
         selectfile.grid(row=0, column=2, pady=10)
 
         # Create a label as a placeholder
-        self.placeholder_label = tk.Label(frame, text='Enter a number', fg='gray')
-        self.number_entry = tk.Entry(frame, fg='gray')  # Set initial text color to lighter color
-        self.number_entry.insert(0, 'Enter a number')
+        self.placeholder_label = tk.Label(frame, text="Enter a number", fg="gray")
+        self.number_entry = tk.Entry(
+            frame, fg="gray"
+        )  # Set initial text color to lighter color
+        self.number_entry.insert(0, "Enter a number")
         self.number_entry.bind("<FocusIn>", self.on_entry_click)
         self.number_entry.bind("<FocusOut>", self.on_focus_out)
         self.number_entry.grid(row=5, column=2, pady=5)
 
         # Create Radio Buttons
         self.selected_option = tk.StringVar()
-        radio1 = tk.Radiobutton(frame, text="Levels", value="Levels", variable=self.selected_option)
-        radio2 = tk.Radiobutton(frame, text="Bits", value="Bits", variable=self.selected_option)
+        radio1 = tk.Radiobutton(
+            frame, text="Levels", value="Levels", variable=self.selected_option
+        )
+        radio2 = tk.Radiobutton(
+            frame, text="Bits", value="Bits", variable=self.selected_option
+        )
         radio1.grid(row=10, column=2)
         radio2.grid(row=15, column=2)
         self.selected_option.set(" ")
 
         # # Create perform operation button
-        perform_operation_button = tk.Button(frame, text="Perform operation", command=self.perform_operation)
+        perform_operation_button = tk.Button(
+            frame, text="Perform operation", command=self.perform_operation
+        )
         perform_operation_button.grid(row=30, column=2, pady=20)
         frame.pack()
 
@@ -55,7 +63,9 @@ class Task_3:
 
     def perform_operation(self):
         if self.file_path == "" or self.number_entry.get() == "Enter a number":
-            messagebox.showerror("Missing input", "Please select a file first and a number")
+            messagebox.showerror(
+                "Missing input", "Please select a file first and a number"
+            )
             return
 
         self.signal_processor.read_signal_from_file(self.file_path)
@@ -75,7 +85,9 @@ class Task_3:
     def on_entry_click(self, *args):
         if self.number_entry.get() == "Enter a number":
             self.number_entry.delete(0, "end")
-            self.number_entry.config(fg="black")  # Change text color to black when typing
+            self.number_entry.config(
+                fg="black"
+            )  # Change text color to black when typing
 
     # Function to handle entry field focus out event
     def on_focus_out(self, *args):

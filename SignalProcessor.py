@@ -12,16 +12,16 @@ class SignalProcessor:
         self.signal = signal
 
     def read_signal_from_file(self, filename):
-        with open(filename, 'r') as file:
+        with open(filename, "r") as file:
             t = int(file.readline().strip())
             is_periodic = bool(int(file.readline().strip()))
             n_samples = int(file.readline().strip())
             self.signal = []
             if is_periodic:
                 for _ in range(n_samples):
-                    values = file.readline().replace(',', ' ').split()
-                    values[0] = values[0].replace('f', '')
-                    values[1] = values[1].replace('f', '')
+                    values = file.readline().replace(",", " ").split()
+                    values[0] = values[0].replace("f", "")
+                    values[1] = values[1].replace("f", "")
                     amplitude, phase_shift = map(float, values)
                     self.signal.append([amplitude, phase_shift])
             else:
@@ -29,6 +29,8 @@ class SignalProcessor:
                     values = file.readline().split()
                     index, sample_amp = map(float, values)
                     self.signal.append([index, sample_amp])
+
+        return self.signal
 
     def display_signal(self, discrete=True, continuous=True):
         if not self.signal:
@@ -39,9 +41,9 @@ class SignalProcessor:
             x = [sample[0] for sample in self.signal]
             y = [sample[1] for sample in self.signal]
             markerline, stemlines, baseline = plt.stem(x, y)
-            plt.setp(markerline, color='b')
-            plt.setp(stemlines, color='b')
-            plt.setp(baseline, color='b')
+            plt.setp(markerline, color="b")
+            plt.setp(stemlines, color="b")
+            plt.setp(baseline, color="b")
 
             plt.xlabel("Sample Index" if self.signal[0][0] == 0 else "Frequency")
             plt.ylabel("Amplitude")
@@ -64,20 +66,22 @@ class SignalProcessor:
             x = [sample[0] for sample in self.signal]
             y = [sample[1] for sample in self.signal]
             markerline, stemlines, baseline = plt.stem(x, y)
-            plt.setp(markerline, color='b')
-            plt.setp(stemlines, color='b')
-            plt.setp(baseline, color='b')
+            plt.setp(markerline, color="b")
+            plt.setp(stemlines, color="b")
+            plt.setp(baseline, color="b")
 
             plt.xlabel("Sample Index" if self.signal[0][0] == 0 else "Frequency")
             plt.ylabel("Amplitude")
             plt.show()
 
-    def generate_signal(self, signalType, amplitude, analog_frequency, sampling_frequency, phase_shift):
+    def generate_signal(
+        self, signalType, amplitude, analog_frequency, sampling_frequency, phase_shift
+    ):
         # Check if the sampling theorem satisfied
         if 2 * analog_frequency > sampling_frequency:
             messagebox.showerror(
                 "Sampling Frequency Error",
-                "The sampling frequency must be at least twice the maximum analog frequency."
+                "The sampling frequency must be at least twice the maximum analog frequency.",
             )
             return
 
