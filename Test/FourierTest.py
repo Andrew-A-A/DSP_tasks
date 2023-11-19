@@ -40,15 +40,3 @@ def IDFT_test():
 DFT_test()
 
 IDFT_test()
-
-
-# fva, fvp = sketch(dft_actual, sampling_frequency=100)
-# signal_processor.signal = fva
-# signal_processor.display_signal(continuous=False)
-#
-# signal_processor.signal = fvp
-# signal_processor.display_signal(continuous=False)
-#
-# signal_processor = SignalProcessor()
-# signal_processor.read_signal_from_file("../data/task4/IDFT/Input_Signal_IDFT_A,Phase.txt")
-# x = idft(signal_processor.signal)
