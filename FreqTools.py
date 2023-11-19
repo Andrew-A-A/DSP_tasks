@@ -13,12 +13,12 @@ def dct(signals):
 
 
 def remove_dc(signal):
+    # x(k) = x(n) - mean
     summation = 0
     signal_dc_removed = []
     for n, x_n in signal:
         summation += x_n
     mean = summation / len(signal)
-
     for n, x_n in signal:
         signal_dc_removed.append(round(x_n - mean, 3))
     return signal_dc_removed
