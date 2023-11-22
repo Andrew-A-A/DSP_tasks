@@ -1,7 +1,7 @@
 import tkinter as tk
 from Task_12 import Task_12
 from Task_3 import Task_3
-from Task_4 import Task_4
+from Task_45 import Task_45
 
 # region GUI
 main_window = tk.Tk()
@@ -13,17 +13,17 @@ y_position = (screen_height - 200) // 2
 # Set the window's geometry to be centered
 main_window.geometry(f"{200}x{200}+{x_position}+{y_position}")
 
-main_window.title("Signal Processing")
+main_window.title("Digital Signal Processing")
 # prepare each window for each Task
-task_12 = Task_12(main_window)
-task_3 = Task_3(main_window)
-task_4 = Task_4(main_window)
+task_12 = Task_12(main_window, "Task 1&2")
+task_3 = Task_3(main_window, "Task 3")
+task_45 = Task_45(main_window, "Task 4&5")
 
 # Creates a list of button labels
-button_data = [("Task 1&2", task_12), ("Task 3", task_3), ("Task 4", task_4)]
+button_data = [task_12, task_3, task_45]
 # Create and center the buttons for each task
-for label, win in button_data:
-    button = tk.Button(main_window, text=label, command=win.open_window)
+for win in button_data:
+    button = tk.Button(main_window, text=win.title, command=win.open_window)
     button.pack(fill="x", pady=5)
 
 main_window.mainloop()

@@ -6,18 +6,19 @@ from Test.testing import SignalSamplesAreEqual
 
 
 class Task_12:
-    def __init__(self, main_window):
+    def __init__(self, main_window, title):
         self.signal_processor = SignalProcessor()
         self.added_signals = []
         self.sub_signals = []
         self.main_window = main_window
         self.app = None  # Initialize app as None
+        self.title = title
 
     def open_window(self):
         if self.app is not None:
             return
         self.app = tk.Toplevel(self.main_window)
-        self.app.title("Task 1&2")
+        self.app.title(self.title)
 
         # Create GUI elements
         self.read_button = tk.Button(self.app, text="Read Signal from File", command=self.read_file_and_display)

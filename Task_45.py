@@ -4,16 +4,18 @@ from tkinter import ttk, messagebox, filedialog
 import matplotlib.pyplot as plt
 
 from Quantizer import *
+from FreqTools import *
 from SignalProcessor import SignalProcessor
 from FourierMagic import dft, sketch, idft
 
 
-class Task_4:
-    def __init__(self, main_window):
+class Task_45:
+    def __init__(self, main_window, title):
         self.main_window = main_window
         self.app = None  # Initialize app as None
         self.signal_processor = SignalProcessor()
         self.file_path = ""
+        self.title = title
         self.EPSILON = 10 ** (-8)  # to compare floating numbers
 
     def open_window(self):
@@ -21,14 +23,14 @@ class Task_4:
             return
 
         self.app = tk.Toplevel(self.main_window)
-        self.app.title("Task 4")
-        self.app.geometry("830x500+200+200")
+        self.app.title(self.title)
+        self.app.geometry("835x500+200+200")
 
         # Create a frame to hold the widgets
         frame = tk.Frame(self.app, width=50)
 
         # create a frame for select/save file
-        files = tk.Frame(frame, width=20)
+        files = tk.Frame(frame, width=22)
 
         # Create a Load File button
         loadfile = tk.Button(files, text="Load File", width=10, command=self.load_file)
@@ -40,6 +42,9 @@ class Task_4:
 
         # place files frame
         files.grid(row=0, column=0, pady=10)
+        # Create an entry point to save M records
+        self.number_entry_records = tk.Entry(frame, fg="gray", width=33)
+        self.number_entry_records.grid(row=2, column=0, padx=5, pady=5)
 
         # Create a button to execute the DFT
         DFT_button = tk.Button(frame, text="DFT", width=20, command=self.implementDFT)
@@ -51,15 +56,25 @@ class Task_4:
         )
         IDFT_button.grid(row=7, column=0, pady=2)
 
+        # Create a button to execute DCT
+        DFT_button = tk.Button(frame, text="DCT", width=20, command=self.implementDCT)
+        DFT_button.grid(row=10, column=0, pady=2)
+
+        # Create a button to execute remove_DC
+        DFT_button = tk.Button(
+            frame, text="Remove DC", width=20, command=self.implementRemove_DC
+        )
+        DFT_button.grid(row=12, column=0, pady=2)
+
         # create entry number for sampling_frequency
         self.number_entry_sampling_frequency = tk.Entry(frame, fg="gray", width=30)
-        self.number_entry_sampling_frequency.grid(row=10, column=0, padx=5, pady=40)
+        self.number_entry_sampling_frequency.grid(row=15, column=0, padx=5, pady=40)
 
         # Create a Plot file button
         plot_button = tk.Button(
             frame, text="Plot", width=10, command=self.plot_function
         )
-        plot_button.grid(row=12, column=0, padx=5, pady=5)
+        plot_button.grid(row=17, column=0, padx=5, pady=5)
 
         # place the frame
         frame.pack(side="left")
@@ -89,23 +104,7 @@ class Task_4:
             return
 
         self.signal_processor.signal = idft(data)
-        print(self.signal_processor.signal)
         self.signal_processor.display_signal(self.signal_processor.signal)
-
-    # def read_file(self, file_name):
-    #     data = []
-    #     with open(file_name, "r") as file:
-    #         content = file.read()
-    #         lines = content.split("\n")
-    #         if list[-1] == []:
-    #             list.pop()
-    #         for line in lines:
-    #             # split each line
-    #             values = line.split(" ")
-    #             # convert values to float
-    #             values = [float(element) for element in values]
-    #             data.append(values)
-    #     return data
 
     def plot_function(self):
         root = tk.Tk()
@@ -130,18 +129,53 @@ class Task_4:
         # plot frequency verse Phase Shift
         self.plot("Frequency", "Phase Shift", np.array(frequency_phase))
 
+    def implementDCT(self):
+        if len(self.file_path) == 0:
+            messagebox.showerror("Missing Input", "Please select a file first")
+            return
+
+        # clear the elements in the tree
+        for child in self.tree.get_children():
+            self.tree.delete(child)
+
+        signal = self.signal_processor.read_signal_from_file(self.file_path)
+        result = dct(signal)
+        data = [[i, result[i]] for i in range(len(result))]
+        # add the lst to the tree
+        for sample in data:
+            self.add_sample((sample[0], sample[1]))
+
+        self.plot("K", "X(K)", np.array(data))
+
+    def implementRemove_DC(self):
+        if len(self.file_path) == 0:
+            messagebox.showerror("Missing Input", "Please select a file first")
+            return
+        # clear the elements in the tree
+        for child in self.tree.get_children():
+            self.tree.delete(child)
+
+        signal = self.signal_processor.read_signal_from_file(self.file_path)
+        result = remove_dc(signal)
+        data = [[i, result[i]] for i in range(len(result))]
+        # add the lst to the tree
+        for sample in data:
+            self.add_sample((sample[0], sample[1]))
+
+        self.plot("K", "X(K)", np.array(data))
+
     def plot(self, X_axis_label, Y_axis_label, data):
         x = data[:, 0]  # get the first column
         y = data[:, 1]  # get the second column
         # plot
         plt.plot(x, y)
+        # Add a legend to the plot
+        plt.legend()
         # give labels for x-axis and y-axis
         plt.xlabel(X_axis_label)
         plt.ylabel(Y_axis_label)
         # Add a title to the plot
-        plt.title(f"{X_axis_label} verses {Y_axis_label}")
-        # Add a legend to the plot
-        plt.legend()
+        plt.title(f"{X_axis_label} Verses {Y_axis_label}")
         # Display the plot
         plt.show()
 
@@ -152,15 +186,28 @@ class Task_4:
 
     def save_file(self):
         data = []
+        # save only the required number of records (if not specified save the whole table)
+        cnt = 0
+        limit = 0
+        if (
+            self.number_entry_records.get() == "Enter the number of samples to save"
+            or len(self.number_entry_records.get()) == 0
+        ):
+            limit = len(self.tree.get_children())
+        else:
+            limit = int(self.number_entry_records.get())
         # itterate over the table to change the amplitude and/or the phase shift
         for child in self.tree.get_children():
+            if cnt >= limit:
+                break
             cur_Amp = float(self.tree.item(child)["values"][0])
             cur_phaseShift = float(self.tree.item(child)["values"][1])
+            cnt += 1
 
             data.append([cur_Amp, cur_phaseShift])
 
         if len(data) == 0:
-            messagebox.showerror("Table is empty", "Please run the DFT first")
+            messagebox.showerror("Table is empty", "Please run an algorithm first")
             return
 
         # Open a file dialog to select a file to save
@@ -239,7 +286,7 @@ class Task_4:
 
     def create_table(self):
         # Create a treeview with 3 columns
-        columns = ("Amplitude", "Phase Shift")
+        columns = ("Column #1", "Column #2")
         self.tree = ttk.Treeview(
             self.app, columns=columns, selectmode="extended", height=100
         )
@@ -275,6 +322,10 @@ class Task_4:
             (self.number_entry_Amp, "Enter the new Amplitude"),
             (self.number_entry_phaseShift, "Enter the new PhaseShift"),
             (self.number_entry_sampling_frequency, "Enter the Sampling Frequency"),
+            (
+                self.number_entry_records,
+                "Enter the number of samples to save",
+            ),
         ]
         for number_entry in self.number_entries:
             # Initialize the number_entry`s value with a placeholder

@@ -6,19 +6,20 @@ from SignalProcessor import SignalProcessor
 
 
 class Task_3:
-    def __init__(self, main_window):
+    def __init__(self, main_window, title):
         self.main_window = main_window
         self.app = None  # Initialize app as None
         self.signal_processor = SignalProcessor()
         self.file_path = ""
+        self.title = title
 
     def open_window(self):
         if self.app is not None:
             return
 
         self.app = tk.Toplevel(self.main_window)
-        self.app.title("Task 3")
-        self.app.geometry("200x200+200+200")
+        self.app.title(self.title)
+        self.app.geometry("250x250+200+200")
 
         # Create a frame to hold the widgets
         frame = tk.Frame(self.app)
