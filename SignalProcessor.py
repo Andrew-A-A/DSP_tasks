@@ -41,9 +41,9 @@ class SignalProcessor:
             x = [sample[0] for sample in self.signal]
             y = [sample[1] for sample in self.signal]
             markerline, stemlines, baseline = plt.stem(x, y)
-            plt.setp(markerline, color="b")
+            plt.setp(markerline, color="r")
             plt.setp(stemlines, color="b")
-            plt.setp(baseline, color="b")
+            plt.setp(baseline, color="y")
 
             plt.xlabel("Sample Index" if self.signal[0][0] == 0 else "Frequency")
             plt.ylabel("Amplitude")

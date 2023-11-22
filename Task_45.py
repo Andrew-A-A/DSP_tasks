@@ -168,7 +168,11 @@ class Task_45:
         x = data[:, 0]  # get the first column
         y = data[:, 1]  # get the second column
         # plot
-        plt.plot(x, y)
+        plt.plot()
+        markerline, stemlines, baseline = plt.stem(x, y)
+        plt.setp(markerline, color="b")
+        plt.setp(stemlines, color="b")
+        plt.setp(baseline, color="red")
         # Add a legend to the plot
         plt.legend()
         # give labels for x-axis and y-axis
