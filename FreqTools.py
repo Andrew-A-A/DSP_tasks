@@ -2,7 +2,7 @@ import math
 
 
 def dct(signal):
-    # y(k) = √2/N * ∑ x(n) * cos( pi / 4N ) * (2n - 1 ) * (2k - 1))
+    # y(k) = √(2/N) * ∑ x(n) * cos( (pi / 4N ) * (2n - 1 ) * (2k - 1))
     signal_DCT = [0] * len(signal)
     for k, x_k in enumerate(signal_DCT):
         tmp = 0
