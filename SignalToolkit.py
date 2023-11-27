@@ -1,3 +1,6 @@
+from FourierMagic import dft, idft
+
+
 def moving_average(data, window_size):
     half_window = window_size // 2
     smoothed_data = []
@@ -58,8 +61,12 @@ def sharping(signal):
 def folding(signal):
     folded_signal = []
     n = len(signal) - 1
-    for i in range(0, n+1):
+    for i in range(0, n + 1):
         folded_signal.append([i, signal[n - i][1]])
     return folded_signal
 
 
+def remove_dc_frequency_domain(signal):
+    df_signal = dft(signal)
+    df_signal[0] = [0, 0]
+    return idft(df_signal)

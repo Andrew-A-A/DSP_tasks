@@ -1,5 +1,5 @@
 from SignalProcessor import SignalProcessor
-from SignalToolkit import smooth_amplitudes, folding
+from SignalToolkit import smooth_amplitudes, folding, remove_dc_frequency_domain
 from data.task5.comparesignal2 import SignalSamplesAreEqual
 
 
@@ -76,15 +76,21 @@ def derivative_signal_test():
 
 print("Sharping Test:")
 derivative_signal_test()
+print('----------------------')
 
 print("Moving Average Test:")
 s = SignalProcessor()
 s.read_signal_from_file("../data/task6/TestCases/Moving Average/MovAvgTest2.txt")
 s_signal = smooth_amplitudes(s.signal, 3)
 SignalSamplesAreEqual("../data/task6/TestCases/Moving Average/OutMovAvgTest2.txt", [val[1] for val in s_signal])
-
+print('----------------------')
 print("Folding Test:")
 s.read_signal_from_file("../data/task6/TestCases/Shifting and Folding/input_fold.txt")
 s_signal = folding(s.signal)
 SignalSamplesAreEqual("../data/task6/TestCases/Shifting and Folding/Output_fold.txt", [val[1] for val in s_signal])
+print('----------------------')
+print("Remove DC Test:")
+s.read_signal_from_file("../data/task5/Remove DC component/DC_component_input.txt")
+s_signal = remove_dc_frequency_domain(s.signal)
+SignalSamplesAreEqual("../data/task5/Remove DC component/DC_component_output.txt",  [val[1] for val in s_signal])
 
