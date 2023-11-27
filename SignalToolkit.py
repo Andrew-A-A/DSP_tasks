@@ -31,7 +31,7 @@ def smooth_amplitudes(data, window_size):
         # Calculate the smoothed amplitude using the moving average
         smooth_amplitude = moving_average(amplitudes, window_size)[int(index)]
 
-        result.append([index , smooth_amplitude])
+        result.append([index, smooth_amplitude])
 
     return result
 
@@ -53,5 +53,13 @@ def sharping(signal):
         first_derivative.append([i, x_n - x_min_1])
         second_derivative.append([i, x_plus_1 - (2 * x_n) + x_min_1])
     return first_derivative, second_derivative
+
+
+def folding(signal):
+    folded_signal = []
+    n = len(signal) - 1
+    for i in range(0, n+1):
+        folded_signal.append([i, signal[n - i][1]])
+    return folded_signal
 
 

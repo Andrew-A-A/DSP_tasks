@@ -1,5 +1,5 @@
 from SignalProcessor import SignalProcessor
-from SignalToolkit import smooth_amplitudes
+from SignalToolkit import smooth_amplitudes, folding
 from data.task5.comparesignal2 import SignalSamplesAreEqual
 
 
@@ -67,7 +67,7 @@ def derivative_signal_test():
             second = False
             print("2nd derivative wrong")
             return
-    if (first and second):
+    if first and second:
         print("Derivative Test case passed successfully")
     else:
         print("Derivative Test case failed")
@@ -82,3 +82,9 @@ s = SignalProcessor()
 s.read_signal_from_file("../data/task6/TestCases/Moving Average/MovAvgTest2.txt")
 s_signal = smooth_amplitudes(s.signal, 3)
 SignalSamplesAreEqual("../data/task6/TestCases/Moving Average/OutMovAvgTest2.txt", [val[1] for val in s_signal])
+
+print("Folding Test:")
+s.read_signal_from_file("../data/task6/TestCases/Shifting and Folding/input_fold.txt")
+s_signal = folding(s.signal)
+SignalSamplesAreEqual("../data/task6/TestCases/Shifting and Folding/Output_fold.txt", [val[1] for val in s_signal])
+
