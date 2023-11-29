@@ -1,4 +1,6 @@
+import numpy as np
 from FourierMagic import dft, idft
+from ArethmaticOperations import *
 
 
 def moving_average(data, window_size):
@@ -70,3 +72,39 @@ def remove_dc_frequency_domain(signal):
     df_signal = dft(signal)
     df_signal[0] = [0, 0]
     return idft(df_signal)
+
+
+def delay_or_advance_signal(signal, shift):
+    pass
+
+
+def delay_or_advance_folded_signal(signal):
+    pass
+
+
+def delay_signal(signal, k):
+    modified_signal = np.zeros_like(signal)
+    for indx in range(len(signal) - k):
+        modified_signal[indx + k][1] = signal[indx]
+
+    return modified_signal
+
+
+def advance_signal(signal, k):
+    modified_signal = np.zeros_like(signal)
+    for indx in range(k, len(signal)):
+        modified_signal[indx - k][1] = signal[indx]
+
+    return modified_signal
+
+
+def delay_or_advance_folded_signal(signal, shifting_value):
+    folded_signal = folding(signal)
+    folded_signal = shift(folded_signal, -shifting_value)
+    return folded_signal
+
+
+# load ignal
+# smooth, plot
+# sharpenning, plot after each
+# fold, smoothing, sharpenning, shift, shiftfold, remove dc component in freq domain

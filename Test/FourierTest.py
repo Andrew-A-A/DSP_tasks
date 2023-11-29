@@ -9,7 +9,9 @@ from data.task4.signalcompare import SignalComapreAmplitude, SignalComaprePhaseS
 # 4- and make condition if the two functions return the true
 def DFT_test():
     signal_processor = SignalProcessor()
-    signal_processor.read_signal_from_file("../data/task4/DFT/Output_Signal_DFT_A,Phase.txt")
+    signal_processor.read_signal_from_file(
+        "../data/task4/DFT/Output_Signal_DFT_A,Phase.txt"
+    )
     dft_test_amplitude = [val[0] for val in signal_processor.signal]
     dft_test_phase = [val[1] for val in signal_processor.signal]
     signal_processor.read_signal_from_file("../data/task4/DFT/input_Signal_DFT.txt")
@@ -27,7 +29,9 @@ def IDFT_test():
     signal_processor.read_signal_from_file("../data/task4/IDFT/Output_Signal_IDFT.txt")
     idft_test_amplitude = [val[0] for val in signal_processor.signal]
     idft_test_phase = [val[1] for val in signal_processor.signal]
-    signal_processor.read_signal_from_file("../data/task4/IDFT/Input_Signal_IDFT_A,Phase.txt")
+    signal_processor.read_signal_from_file(
+        "../data/task4/IDFT/Input_Signal_IDFT_A,Phase.txt"
+    )
     idft_actual = idft(signal_processor.signal)
     idft_actual_amplitude = [val[0] for val in idft_actual]
     idft_actual_phase = [val[1] for val in idft_actual]

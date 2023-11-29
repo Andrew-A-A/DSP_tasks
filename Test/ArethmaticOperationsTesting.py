@@ -1,8 +1,7 @@
-from ArethmaticOperations import AritmaticOperation
 from SignalProcessor import SignalProcessor
-from testing import SignalSamplesAreEqual
 
-operation = AritmaticOperation()
+from ArethmaticOperations import *
+from testing import SignalSamplesAreEqual
 
 
 def testAdd():
@@ -13,16 +12,20 @@ def testAdd():
     signals.append(signal_processor.signal)
     signal_processor.read_signal_from_file("../data/task2/input signals/Signal2.txt")
     signals.append(signal_processor.signal)
-    added = operation.add(signals)
-    SignalSamplesAreEqual("../data/task2/output signals/Signal1+signal2.txt", [val[1] for val in added])
+    added = add(signals)
+    SignalSamplesAreEqual(
+        "../data/task2/output signals/Signal1+signal2.txt", [val[1] for val in added]
+    )
 
     signals = list()
     signal_processor.read_signal_from_file("../data/task2/input signals/Signal1.txt")
     signals.append(signal_processor.signal)
     signal_processor.read_signal_from_file("../data/task2/input signals/Signal3.txt")
     signals.append(signal_processor.signal)
-    added = operation.add(signals)
-    SignalSamplesAreEqual("../data/task2/output signals/signal1+signal3.txt", [val[1] for val in added])
+    added = add(signals)
+    SignalSamplesAreEqual(
+        "../data/task2/output signals/signal1+signal3.txt", [val[1] for val in added]
+    )
 
 
 def testSubtract():
@@ -32,15 +35,21 @@ def testSubtract():
     signal1 = signal_processor.signal
     signal_processor.read_signal_from_file("../data/task2/input signals/Signal2.txt")
     signal2 = signal_processor.signal
-    subtracted = operation.subtract(signal1, signal2)
-    SignalSamplesAreEqual("../data/task2/output signals/signal1-signal2.txt", [val[1] for val in subtracted])
+    subtracted = subtract(signal1, signal2)
+    SignalSamplesAreEqual(
+        "../data/task2/output signals/signal1-signal2.txt",
+        [val[1] for val in subtracted],
+    )
 
     signal_processor.read_signal_from_file("../data/task2/input signals/Signal1.txt")
     signal1 = signal_processor.signal
     signal_processor.read_signal_from_file("../data/task2/input signals/Signal3.txt")
     signal2 = signal_processor.signal
-    subtracted = operation.subtract(signal1, signal2)
-    SignalSamplesAreEqual("../data/task2/output signals/signal1-signal3.txt", [val[1] for val in subtracted])
+    subtracted = subtract(signal1, signal2)
+    SignalSamplesAreEqual(
+        "../data/task2/output signals/signal1-signal3.txt",
+        [val[1] for val in subtracted],
+    )
 
 
 def testMultiply():
@@ -48,15 +57,19 @@ def testMultiply():
     signal_processor = SignalProcessor()
     signal_processor.read_signal_from_file("../data/task2/input signals/Signal1.txt")
     signal1 = signal_processor.signal
-    multi = operation.multiply(signal1, 5)
-    SignalSamplesAreEqual("../data/task2/output signals/MultiplySignalByConstant-Signal1 - by 5.txt",
-                          [val[1] for val in multi])
+    multi = multiply(signal1, 5)
+    SignalSamplesAreEqual(
+        "../data/task2/output signals/MultiplySignalByConstant-Signal1 - by 5.txt",
+        [val[1] for val in multi],
+    )
 
     signal_processor.read_signal_from_file("../data/task2/input signals/Signal2.txt")
     signal2 = signal_processor.signal
-    multi = operation.multiply(signal2, 10)
-    SignalSamplesAreEqual("../data/task2/output signals/MultiplySignalByConstant-signal2 - by 10.txt",
-                          [val[1] for val in multi])
+    multi = multiply(signal2, 10)
+    SignalSamplesAreEqual(
+        "../data/task2/output signals/MultiplySignalByConstant-signal2 - by 10.txt",
+        [val[1] for val in multi],
+    )
 
 
 def testSquare():
@@ -64,19 +77,30 @@ def testSquare():
     signal_processor = SignalProcessor()
     signal_processor.read_signal_from_file("../data/task2/input signals/Signal1.txt")
     signal1 = signal_processor.signal
-    sq = operation.square(signal1)
-    SignalSamplesAreEqual("../data/task2/output signals/Output squaring signal 1.txt", [val[1] for val in sq])
+    sq = square(signal1)
+    SignalSamplesAreEqual(
+        "../data/task2/output signals/Output squaring signal 1.txt",
+        [val[1] for val in sq],
+    )
 
 
 def testShift():
     print("Test Shift:")
     signal_processor = SignalProcessor()
-    signal_processor.read_signal_from_file("../data/task2/input signals/Input Shifting.txt")
+    signal_processor.read_signal_from_file(
+        "../data/task2/input signals/Input Shifting.txt"
+    )
     Input1 = signal_processor.signal
-    shifted1 = operation.shift(Input1, 500)
-    shifted2 = operation.shift(Input1, -500)
-    SignalSamplesAreEqual("../data/task2/output signals/output shifting by add 500.txt", [val[1] for val in shifted1])
-    SignalSamplesAreEqual("../data/task2/output signals/output shifting by minus 500.txt", [val[1] for val in shifted2])
+    shifted1 = shift(Input1, 500)
+    shifted2 = shift(Input1, -500)
+    SignalSamplesAreEqual(
+        "../data/task2/output signals/output shifting by add 500.txt",
+        [val[1] for val in shifted1],
+    )
+    SignalSamplesAreEqual(
+        "../data/task2/output signals/output shifting by minus 500.txt",
+        [val[1] for val in shifted2],
+    )
 
 
 def testNormalize():
@@ -86,11 +110,16 @@ def testNormalize():
     Input1 = signal_processor.signal
     signal_processor.read_signal_from_file("../data/task2/input signals/Signal2.txt")
     Input2 = signal_processor.signal
-    normalized1 = operation.normalize(Input1, (-1, 1))
-    normalized2 = operation.normalize(Input2, (0, 1))
-    SignalSamplesAreEqual("../data/task2/output signals/normalize of signal 1 -- output.txt",
-                          [val[1] for val in normalized1])
-    SignalSamplesAreEqual("../data/task2/output signals/normlize signal 2 -- output.txt", [val[1] for val in normalized2])
+    normalized1 = normalize(Input1, (-1, 1))
+    normalized2 = normalize(Input2, (0, 1))
+    SignalSamplesAreEqual(
+        "../data/task2/output signals/normalize of signal 1 -- output.txt",
+        [val[1] for val in normalized1],
+    )
+    SignalSamplesAreEqual(
+        "../data/task2/output signals/normlize signal 2 -- output.txt",
+        [val[1] for val in normalized2],
+    )
 
 
 def testAccumulate():
@@ -98,9 +127,11 @@ def testAccumulate():
     signal_processor = SignalProcessor()
     signal_processor.read_signal_from_file("../data/task2/input signals/Signal1.txt")
     Input1 = signal_processor.signal
-    accumulated = operation.accumulation(Input1)
-    SignalSamplesAreEqual("../data/task2/output signals/output accumulation for signal1.txt",
-                          [val[1] for val in accumulated])
+    accumulated = accumulation(Input1)
+    SignalSamplesAreEqual(
+        "../data/task2/output signals/output accumulation for signal1.txt",
+        [val[1] for val in accumulated],
+    )
 
 
 testAdd()
