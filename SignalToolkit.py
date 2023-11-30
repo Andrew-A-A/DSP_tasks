@@ -100,24 +100,24 @@ def shift_folding(signal, shifting_value):
     return first_column, second_column
 
 
-print("Shif Folded by 500 Test:")
-s = SignalProcessor()
-s.read_signal_from_file("data/task6/TestCases/Shifting and Folding/input_fold.txt")
-first_column, second_column = shift_folding(s.signal, 500)
-Shift_Fold_Signal(
-    "data/task6/TestCases/Shifting and Folding/Output_ShifFoldedby500.txt",
-    first_column,
-    second_column,
-)
-print("----------------------")
+# print("Shif Folded by 500 Test:")
+# s = SignalProcessor()
+# s.read_signal_from_file("data/task6/TestCases/Shifting and Folding/input_fold.txt")
+# first_column, second_column = shift_folding(s.signal, 500)
+# Shift_Fold_Signal(
+#     "data/task6/TestCases/Shifting and Folding/Output_ShifFoldedby500.txt",
+#     first_column,
+#     second_column,
+# )
+# print("----------------------")
 
-print("Shif Folded by -500 Test:")
-s = SignalProcessor()
-s.read_signal_from_file("data/task6/TestCases/Shifting and Folding/input_fold.txt")
-first_column, second_column = shift_folding(s.signal, -500)
-Shift_Fold_Signal(
-    "data/task6/TestCases/Shifting and Folding/Output_ShiftFoldedby-500.txt",
-    first_column,
-    second_column,
-)
-print("----------------------")
+# print("Shif Folded by -500 Test:")
+# s = SignalProcessor()
+# s.read_signal_from_file("data/task6/TestCases/Shifting and Folding/input_fold.txt")
+# first_column, second_column = shift_folding(s.signal, -500)
+# Shift_Fold_Signal(
+#     "data/task6/TestCases/Shifting and Folding/Output_ShiftFoldedby-500.txt",
+#     first_column,
+#     second_column,
+# )
+# print("----------------------")
