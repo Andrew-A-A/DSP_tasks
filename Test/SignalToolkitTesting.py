@@ -403,20 +403,20 @@ print("----------------------")
 
 print("Shif Folded by 500 Test:")
 s = SignalProcessor()
-s.read_signal_from_file("../data/task6/TestCases/Shifting and Folding/input_fold.txt")
-s_signal = delay_or_advance_folded_signal(s.signal, 500)
+s.read_signal_from_file("data/task6/TestCases/Shifting and Folding/input_fold.txt")
+s_signal = delay_or_advance_folded_signal(s.signal, -500)
 SignalSamplesAreEqual(
-    "../data/task6/TestCases/Shifting and Folding/Output_ShifFoldedby500.txt",
+    "data/task6/TestCases/Shifting and Folding/Output_ShifFoldedby500.txt",
     [val[1] for val in s_signal],
 )
 print("----------------------")
 
 print("Shif Folded by -500 Test:")
 s = SignalProcessor()
-s.read_signal_from_file("../data/task6/TestCases/Shifting and Folding/input_fold.txt")
-s_signal = delay_or_advance_folded_signal(s.signal, -500)
+s.read_signal_from_file("data/task6/TestCases/Shifting and Folding/input_fold.txt")
+s_signal = delay_or_advance_folded_signal(s.signal, 500)
 SignalSamplesAreEqual(
-    "../data/task6/TestCases/Shifting and Folding/Output_ShiftFoldedby-500.txt",
+    "data/task6/TestCases/Shifting and Folding/Output_ShiftFoldedby-500.txt",
     [val[1] for val in s_signal],
 )
 print("----------------------")

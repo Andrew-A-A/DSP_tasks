@@ -1,5 +1,4 @@
 from SignalProcessor import SignalProcessor
-
 from ArethmaticOperations import *
 from testing import SignalSamplesAreEqual
 

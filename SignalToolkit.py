@@ -1,6 +1,9 @@
 import numpy as np
 from FourierMagic import dft, idft
 from ArethmaticOperations import *
+from SignalProcessor import SignalProcessor
+
+from Shift_Fold_Signal import Shift_Fold_Signal
 
 
 def moving_average(data, window_size):
@@ -74,14 +77,6 @@ def remove_dc_frequency_domain(signal):
     return idft(df_signal)
 
 
-def delay_or_advance_signal(signal, shift):
-    pass
-
-
-def delay_or_advance_folded_signal(signal):
-    pass
-
-
 def delay_signal(signal, k):
     modified_signal = np.zeros_like(signal)
     for indx in range(len(signal) - k):
@@ -98,13 +93,31 @@ def advance_signal(signal, k):
     return modified_signal
 
 
-def delay_or_advance_folded_signal(signal, shifting_value):
-    folded_signal = folding(signal)
-    folded_signal = shift(folded_signal, -shifting_value)
-    return folded_signal
+def shift_folding(signal, shifting_value):
+    shifted = shift(signal, shifting_value)
+    first_column, second_column = map(list, zip(*shifted))
+    second_column = list(reversed(second_column))
+    return first_column, second_column
 
 
-# load ignal
-# smooth, plot
-# sharpenning, plot after each
-# fold, smoothing, sharpenning, shift, shiftfold, remove dc component in freq domain
+print("Shif Folded by 500 Test:")
+s = SignalProcessor()
+s.read_signal_from_file("data/task6/TestCases/Shifting and Folding/input_fold.txt")
+first_column, second_column = shift_folding(s.signal, 500)
+Shift_Fold_Signal(
+    "data/task6/TestCases/Shifting and Folding/Output_ShifFoldedby500.txt",
+    first_column,
+    second_column,
+)
+print("----------------------")
+
+print("Shif Folded by -500 Test:")
+s = SignalProcessor()
+s.read_signal_from_file("data/task6/TestCases/Shifting and Folding/input_fold.txt")
+first_column, second_column = shift_folding(s.signal, -500)
+Shift_Fold_Signal(
+    "data/task6/TestCases/Shifting and Folding/Output_ShiftFoldedby-500.txt",
+    first_column,
+    second_column,
+)
+print("----------------------")

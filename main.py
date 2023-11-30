@@ -2,6 +2,7 @@ import tkinter as tk
 from Task_12 import Task_12
 from Task_3 import Task_3
 from Task_45 import Task_45
+from Task_6 import Task_6
 
 # region GUI
 main_window = tk.Tk()
@@ -18,9 +19,10 @@ main_window.title("Digital Signal Processing")
 task_12 = Task_12(main_window, "Task 1&2")
 task_3 = Task_3(main_window, "Task 3")
 task_45 = Task_45(main_window, "Task 4&5")
+task_6 = Task_6(main_window, "Task 6")
 
 # Creates a list of button labels
-button_data = [task_12, task_3, task_45]
+button_data = [task_12, task_3, task_45, task_6]
 # Create and center the buttons for each task
 for win in button_data:
     button = tk.Button(main_window, text=win.title, command=win.open_window)
