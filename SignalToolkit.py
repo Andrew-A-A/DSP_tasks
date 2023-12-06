@@ -1,10 +1,6 @@
 import numpy as np
 from FourierMagic import dft, idft
 from ArethmaticOperations import *
-from SignalProcessor import SignalProcessor
-
-from Shift_Fold_Signal import Shift_Fold_Signal
-
 
 def moving_average(data, window_size):
     half_window = window_size // 2
@@ -100,24 +96,22 @@ def shift_folding(signal, shifting_value):
     return first_column, second_column
 
 
-# print("Shif Folded by 500 Test:")
-# s = SignalProcessor()
-# s.read_signal_from_file("data/task6/TestCases/Shifting and Folding/input_fold.txt")
-# first_column, second_column = shift_folding(s.signal, 500)
-# Shift_Fold_Signal(
-#     "data/task6/TestCases/Shifting and Folding/Output_ShifFoldedby500.txt",
-#     first_column,
-#     second_column,
-# )
-# print("----------------------")
+def convolve(signal1, signal2):
+    len_1 = len(signal1)
+    len_2 = len(signal2)
 
-# print("Shif Folded by -500 Test:")
-# s = SignalProcessor()
-# s.read_signal_from_file("data/task6/TestCases/Shifting and Folding/input_fold.txt")
-# first_column, second_column = shift_folding(s.signal, -500)
-# Shift_Fold_Signal(
-#     "data/task6/TestCases/Shifting and Folding/Output_ShiftFoldedby-500.txt",
-#     first_column,
-#     second_column,
-# )
-# print("----------------------")
+    result_indices = []
+    result_samples = [0] * (len_1 + len_2 - 1)
+
+    for i in range(len_1):
+        for j in range(len_2):
+            index_sum = int(signal1[i][0] + signal2[j][0])
+            result_samples[index_sum] += signal1[i][1] * signal2[j][1]
+
+            if index_sum not in result_indices:
+                result_indices.append(index_sum)
+
+    result_indices.sort()
+    result_samples = [result_samples[index] for index in result_indices]
+
+    return result_indices, result_samples
