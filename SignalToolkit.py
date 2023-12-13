@@ -2,6 +2,7 @@ import numpy as np
 from FourierMagic import dft, idft
 from ArethmaticOperations import *
 
+
 def moving_average(data, window_size):
     half_window = window_size // 2
     smoothed_data = []
@@ -111,7 +112,6 @@ def convolve(signal1, signal2):
             if index_sum not in result_indices:
                 result_indices.append(index_sum)
 
-    result_indices.sort()
     result_samples = [result_samples[index] for index in result_indices]
 
     return result_indices, result_samples

@@ -4,7 +4,7 @@ from data.task5.comparesignal2 import SignalSamplesAreEqual
 from data.task7.Convolution.ConvTest import *
 
 def derivative_signal_test():
-    # region
+    # region input
     InputSignal = list(range(1, 101))  # Generating the InputSignal array from 1 to 100
     expectedOutput_first = [1] * len(InputSignal)  # Creating an array of 1s with the same length as InputSignal
     expectedOutput_second = [0] * len(InputSignal)  # Creating an array of 0s with the same length as InputSignal
