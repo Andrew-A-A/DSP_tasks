@@ -4,6 +4,7 @@ from Task_3 import Task_3
 from Task_45 import Task_45
 from Task_6 import Task_6
 from Task_7 import Task_7
+from Task_8 import Task_8
 
 # region GUI
 main_window = tk.Tk()
@@ -22,9 +23,10 @@ task_3 = Task_3(main_window, "Task 3")
 task_45 = Task_45(main_window, "Task 4&5")
 task_6 = Task_6(main_window, "Task 6")
 task_7 = Task_7(main_window, "Task 7")
+task_8 = Task_8(main_window, "Task 8")
 
 # Creates a list of button labels
-button_data = [task_12, task_3, task_45, task_6, task_7]
+button_data = [task_12, task_3, task_45, task_6, task_7, task_8]
 # Create and center the buttons for each task
 for win in button_data:
     button = tk.Button(main_window, text=win.title, command=win.open_window)
