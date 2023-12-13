@@ -29,7 +29,7 @@ def Compare_Signals(file_name, Your_indices, Your_samples):
         print("Shift_Fold_Signal Test case failed, your signal have different length from the expected one")
         return
     for i in range(len(Your_indices)):
-        if (Your_indices[i] != expected_indices[i]):
+        if Your_indices[i] != expected_indices[i]:
             print("Shift_Fold_Signal Test case failed, your signal have different indicies from the expected one")
             return
     for i in range(len(expected_samples)):
@@ -50,5 +50,3 @@ def test_correlation():
 
 
 test_correlation()
-
-
