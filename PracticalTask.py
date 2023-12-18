@@ -1,10 +1,8 @@
 import cmath
-import math
 
 import numpy as np
 
 from FourierMagic import dft, idft
-from SignalProcessor import SignalProcessor
 
 
 # TODO Fix Convolution or implement new one
@@ -79,7 +77,7 @@ def fastCorrelation(signal1, signal2):
     # Compute the Inverse Discrete Fourier Transform (IDFT) to get the cross-correlation in time domain
     cross_correlation_time = idft(tmp)
 
-    # Normalize the cross-correlation
+    # Normalize
     normalizedSignal = [(1 / len(cross_correlation_time)) * s[1] for s in cross_correlation_time]
 
     # Return the indices and the normalized cross-correlation signal
