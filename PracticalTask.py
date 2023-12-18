@@ -54,17 +54,6 @@ def fastCorrelation(signal1, signal2):
     f1 = dft(signal1)
     f2 = dft(signal2)
 
-    # Initialize lists to store indices, squared values for signal1 and signal2
-    x1_indices = []
-    x1Squared = []
-    x2Squared = []
-
-    # Compute the squared values and indices for each element in signal1 and signal2
-    for i in range(len(signal1)):
-        x1_indices.append(i)
-        x1Squared.append(signal1[i][1] ** 2)
-        x2Squared.append(signal2[i][1] ** 2)
-
     # Convert amplitude and phase to rectangular form for signal1
     for i in range(len(f1)):
         A = f1[i][0]
