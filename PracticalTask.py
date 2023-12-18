@@ -65,10 +65,6 @@ def fastCorrelation(signal1, signal2):
         x1Squared.append(signal1[i][1] ** 2)
         x2Squared.append(signal2[i][1] ** 2)
 
-    # Calculate the sum of squared values for signal1 and signal2
-    x1sqrSum = np.sum(x1Squared)
-    x2sqrSum = np.sum(x2Squared)
-
     # Convert amplitude and phase to rectangular form for signal1
     for i in range(len(f1)):
         A = f1[i][0]
