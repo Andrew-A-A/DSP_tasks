@@ -1,4 +1,4 @@
-from Correlation import normalizedCrossCorrelation
+from Correlation import correlation
 from SignalProcessor import SignalProcessor
 
 
@@ -45,8 +45,8 @@ def test_correlation():
     s = SignalProcessor()
     signal1 = s.read_signal_from_file('../data/task8/Corr_input signal1.txt')
     signal2 = s.read_signal_from_file('../data/task8/Corr_input signal2.txt')
-    index, correlation = normalizedCrossCorrelation(signal1, signal2)
-    Compare_Signals('../data/task8/CorrOutput.txt', index, correlation)
+    index, corr = correlation([s[1] for s in signal1], [s[1] for s in signal2])
+    Compare_Signals('../data/task8/CorrOutput.txt', index, corr)
 
 
 test_correlation()

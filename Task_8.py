@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 
-from Correlation import normalizedCrossCorrelation
+from Correlation import correlation
 from SignalProcessor import SignalProcessor
 
 
@@ -45,7 +45,7 @@ class Task_8:
     def correlate_function(self):
         signal1 = self.signal_processor.read_signal_from_file(self.file_path[0])
         signal2 = self.signal_processor.read_signal_from_file(self.file_path[1])
-        indices, samples = normalizedCrossCorrelation(signal1, signal2)
+        indices, samples = correlation(signal1, signal2)
         result = [[a, b] for a, b in zip(indices, samples)]
         self.signal_processor.set_signal(result)
         self.signal_processor.display_signal()
