@@ -42,7 +42,10 @@ def smooth_amplitudes(data, window_size):
 
 
 def sharping(signal):
+    # First derivative : Y(n) = x(n) - x(n-1)
     first_derivative = []
+
+    # Second derivative : Y(n)= x(n+1) - 2x(n) + x(n-1)
     second_derivative = []
     for i in range(0, len(signal)):
         x_n = signal[i][1]
@@ -76,16 +79,16 @@ def remove_dc_frequency_domain(signal):
 
 def delay_signal(signal, k):
     modified_signal = np.zeros_like(signal)
-    for indx in range(len(signal) - k):
-        modified_signal[indx + k][1] = signal[indx]
+    for index in range(len(signal) - k):
+        modified_signal[index + k][1] = signal[index]
 
     return modified_signal
 
 
 def advance_signal(signal, k):
     modified_signal = np.zeros_like(signal)
-    for indx in range(k, len(signal)):
-        modified_signal[indx - k][1] = signal[indx]
+    for index in range(k, len(signal)):
+        modified_signal[index - k][1] = signal[index]
 
     return modified_signal
 
