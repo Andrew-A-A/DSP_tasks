@@ -20,8 +20,8 @@ Make sure you have the following prerequisites installed on your system:
 Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/signal-processing-toolbox.git
-cd signal-processing-toolbox
+git clone https://github.com/Andrew-A-A/DSP_tasks
+cd DSP_tasks
 ```
 
 ### Usage
