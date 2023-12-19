@@ -21,7 +21,6 @@ Clone the repository to your local machine:
 
 ```bash
 git clone https://github.com/Andrew-A-A/DSP_tasks
-cd DSP_tasks
 ```
 
 ### Usage
