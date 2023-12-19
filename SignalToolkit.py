@@ -101,20 +101,32 @@ def shift_folding(signal, shifting_value):
 
 
 def convolve(signal1, signal2):
+    # Get the lengths of the input signals
     len_1 = len(signal1)
     len_2 = len(signal2)
 
+    # Initialize lists to store the result indices and samples
     result_indices = []
     result_samples = [0] * (len_1 + len_2 - 1)
 
+    # Iterate over each sample in the first signal
     for i in range(len_1):
+        # Iterate over each sample in the second signal
         for j in range(len_2):
+            # Calculate the sum of indices for the result
             index_sum = int(signal1[i][0] + signal2[j][0])
+
+            # Update the result_samples list with the product of signal samples
             result_samples[index_sum] += signal1[i][1] * signal2[j][1]
 
+            # Check if the index_sum is not already in the result_indices list
             if index_sum not in result_indices:
+                # Add the index_sum to the result_indices list
                 result_indices.append(index_sum)
 
+    # Create a new list with samples at unique indices in the result_samples list
     result_samples = [result_samples[index] for index in result_indices]
 
+    # Return the result indices and samples
     return result_indices, result_samples
+

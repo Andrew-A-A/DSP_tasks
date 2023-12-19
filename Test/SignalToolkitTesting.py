@@ -5,7 +5,6 @@ from data.task5.comparesignal2 import SignalSamplesAreEqual
 from data.task7.Convolution.ConvTest import *
 
 
-
 def derivative_signal_test():
     # region input
     InputSignal = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
@@ -29,7 +28,7 @@ def derivative_signal_test():
     def sharping(signal):
         first_derivative = []
         second_derivative = []
-        for i in range(0, len(signal)-1):
+        for i in range(0, len(signal) - 1):
             x_n = signal[i]
             if i == 0:
                 x_min_1 = 0
